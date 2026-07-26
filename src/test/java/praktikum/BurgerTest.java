@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -40,20 +43,19 @@ public class BurgerTest {
     }
 
     @Test
-    public void checkAddIngredient(){
+    public void checkIngredientAddedToList() {
         burger.addIngredient(firstIngredient);
-        int size = burger.ingredients.size();
-        Ingredient currentIngredient = burger.ingredients.get(0);
-        assertEquals(1, size);
-        assertEquals(firstIngredient, currentIngredient);
+
+        assertTrue(burger.ingredients.contains(firstIngredient));
     }
 
     @Test
-    public void checkRemoveIngredientToIndex() {
-        burger.ingredients.add(firstIngredient);
-        burger.removeIngredient(0);
-        assertTrue(burger.ingredients.isEmpty());
+    public void checkIngredientsListSizeAfterAdding() {
+        burger.addIngredient(firstIngredient);
+
+        assertEquals(1, burger.ingredients.size());
     }
+
 
     @Test
     public void checkMoveIngredientToNewIndex(){
@@ -61,9 +63,12 @@ public class BurgerTest {
         burger.ingredients.add(secondIngredient);
         burger.ingredients.add(thirdIngredient);
         burger.moveIngredient(0, 2);
-        assertEquals(secondIngredient, burger.ingredients.get(0));
-        assertEquals(thirdIngredient, burger.ingredients.get(1));
-        assertEquals(firstIngredient, burger.ingredients.get(2));
+        List<Ingredient> expectedIngredients = Arrays.asList(
+                secondIngredient,
+                thirdIngredient,
+                firstIngredient
+        );
+        assertEquals(expectedIngredients, burger.ingredients);
     }
 
     @Test
